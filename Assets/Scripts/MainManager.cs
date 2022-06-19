@@ -14,14 +14,17 @@ public class MainManager : MonoBehaviour
     public GameObject GameOverText;
     
     private bool m_Started = false;
-    private int m_Points;
+    public int m_Points = 0;
     
     private bool m_GameOver = false;
+    private TextManagerMain textManager;
 
     
     // Start is called before the first frame update
     void Start()
     {
+        textManager = GameObject.Find("Canvas").GetComponent<TextManagerMain>();
+        m_Points = 0;
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
@@ -55,6 +58,8 @@ public class MainManager : MonoBehaviour
         }
         else if (m_GameOver)
         {
+            textManager.UpdateHighscore();
+            GameOver();
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
